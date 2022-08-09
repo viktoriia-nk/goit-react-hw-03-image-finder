@@ -18,15 +18,13 @@ class ImageGalleryItem  extends Component {
       };
    
     render(){
-
-    const { webformatURL, largeImageURL } = this.props;
         return(
             <>
             <li className={s.gallery_item}
             onClick={this.togleModal}  >
-                <img className={s.gallery_item__image} src={webformatURL} alt="" />
+                <img className={s.gallery_item__image} src={this.props.webformatURL} alt="" />
             </li>
-            {this.state.modal && (<Modal largeImageURL={largeImageURL} toogleModal={this.togleModal}/>)}
+            {this.state.modal && (<Modal largeImageURL={this.props.largeImageURL} toogleModal={this.togleModal}/>)}
             </>
             );
             
