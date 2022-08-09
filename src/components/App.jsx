@@ -4,12 +4,12 @@ import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
 import Loader from './Loader/Loader';
 
+import fetchPhotosByApi from '../../src/Api';
+
 
 import s from './App.module.css';
 
-// import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
-const API_KEY = '15830616-6bbce06063c91bd81d8a555c0'
 
 export class App extends Component {
 
@@ -22,25 +22,18 @@ export class App extends Component {
   }
 
   fetchPhotos = () => {
-    const { q, page } = this.state;
+    const {q, page} = this.state;
+
     this.setState({loader:true})
-    
-    return fetch(
-      `https://pixabay.com/api/?q=${q}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
-    )
-      .then(response => {
-        if (response.ok){
-          return response.json()
-        }
-        return Promise.reject(new Error('Please, try again!'))
-      })
+    // console.log(q, page);
+    fetchPhotosByApi(q, page)
       .then(photos => {
         if (photos.hits.length === 0) {
           alert('Please, try again!');
         }
-        this.setState(prevState => ({
+        this.setState({
           photos: photos.hits
-        }));
+        });
       })
       .catch(error => this.setState({error}))
       .finally(()=> this.setState({loader: false}))
@@ -58,15 +51,8 @@ export class App extends Component {
   loadMorePhotos = () => {
     const { q, page } = this.state;
     this.setState({loader:true})
-    return fetch(
-      `https://pixabay.com/api/?q=${q}&page=${page}&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=12`
-    )
-      .then(response => {
-        if (response.ok){
-          return response.json()
-        }
-        return Promise.reject(new Error('Please, try again!'))
-      })
+
+   fetchPhotosByApi(q, page)
       .then(photos => {
         this.setState(prevState => ({
           photos: [...prevState.photos, ...photos.hits]
@@ -79,12 +65,12 @@ export class App extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (prevState.q !== this.state.q) {
       this.fetchPhotos()
-      return
+      
     }
 
     if (prevState.page !== this.state.page ) {
       this.loadMorePhotos();
-      return
+      
     }
   };
 
