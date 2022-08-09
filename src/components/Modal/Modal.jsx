@@ -1,5 +1,6 @@
 import { Component } from 'react'; 
 import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
 import s from './Modal.module.css';
 
 const modalWindow = document.getElementById('modal');
@@ -40,6 +41,10 @@ class Modal extends Component {
         modalWindow
         )
    }
+}
+
+Modal.propTypes = {
+  largeImageURL: PropTypes.string.isRequired
 }
 
 export default Modal
