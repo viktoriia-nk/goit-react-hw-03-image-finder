@@ -1,17 +1,15 @@
-import { render } from '@testing-library/react';
+
 import { Component } from 'react';
 import s from './ImageGalleryItem.module.css';
 import Modal from '../Modal/Modal';
 
-class ImageGalleryItem  extends Component {
+class ImageGalleryItem extends Component {
 
     state = {
         modal: false
-        // =({ webformatURL, largeImageURL})=>
     }
 
     togleModal = () => {
-        // this.setState(({ modal }) => ({ modal: !modal }));
         this.setState(({modal}) => ({
             modal: !modal
           }))
@@ -26,7 +24,7 @@ class ImageGalleryItem  extends Component {
             </li>
             {this.state.modal && (<Modal largeImageURL={this.props.largeImageURL} toogleModal={this.togleModal}/>)}
             </>
-            );
+            )
             
     }
 }
