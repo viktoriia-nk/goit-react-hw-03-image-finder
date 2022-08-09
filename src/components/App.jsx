@@ -88,7 +88,7 @@ render() {
       {this.state.error && <h1>{this.state.error.message};</h1>}
       <ImageGallery photos={this.state.photos} />
       {this.state.loader && <Loader />}
-      {this.state.photos.length !==0 && <Button 
+      {this.state.photos.length !==0 || this.state.photos.length >12 && <Button 
       onMore={this.handleLoadMore}
       />}
       
