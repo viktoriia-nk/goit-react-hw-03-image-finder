@@ -22,11 +22,10 @@ export class App extends Component {
   }
 
   fetchPhotos = () => {
-    const {q, page} = this.state;
+    const {q} = this.state;
 
     this.setState({loader:true})
-    // console.log(q, page);
-    fetchPhotosByApi(q, page)
+    fetchPhotosByApi(q)
       .then(photos => {
         if (photos.hits.length === 0) {
           alert('Please, try again!');
@@ -37,6 +36,7 @@ export class App extends Component {
       })
       .catch(error => this.setState({error}))
       .finally(()=> this.setState({loader: false}))
+      
   };
 
   handleFormSubmit =(q)=>{
@@ -68,7 +68,7 @@ export class App extends Component {
       
     }
 
-    if (prevState.page !== this.state.page ) {
+    if (prevState.page !== this.state.page && this.state.page !==1) {
       this.loadMorePhotos();
       
     }
